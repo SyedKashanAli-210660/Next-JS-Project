@@ -1,95 +1,92 @@
+'use client'
 import Image from "next/image";
 import styles from "./page.module.css";
+import CustomerHeader from "./_components/CustomerHeader";
+import RestaurantFooter from "./_components/RestaurantFooter";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    const [locations, setLocations] = useState([])
+    const [selectedLocation, setSelectedLocation] = useState('')
+    const [showLocation, setShowLocation] = useState(false)
+    const [restaurants, setRestaurants] = useState([]);
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+    useEffect(() => {
+        loadlocations();
+        loadRestaurants();
+    }, [])
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+    const loadlocations = async () => {
+        let response = await fetch('http://localhost:3000/api/customer/locations');
+        response = await response.json()
+        if (response.success) {
+            setLocations(response.result)
+        }
+    }
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
+    const loadRestaurants = async (params) => {
+        let url="http://localhost:3000/api/customer/restaurantlist";
+        if(params?.location){
+            url=url+"?location="+params.location
+        }else if(params?.restaurant){
+            url=url+"?restaurant="+params.restaurant
+        }//else
+        let response = await fetch(url);
+        response = await response.json()
+        if (response.success) {
+            setRestaurants(response.result)
+        }
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+    }
+
+    const handleListItem = (item) => {
+        setSelectedLocation(item)
+        setShowLocation(false)
+        loadRestaurants({location:item})
+    }
+
+    console.log(locations);
+    return (
+        <main>
+            <CustomerHeader />
+            <div className="main-page-banner">
+                <h1>Food Delivery App</h1>
+                <div className="input-wrapper">
+                    <input type="text" value={selectedLocation}
+                        onClick={() => setShowLocation(true)}
+                        className="select-input" placeholder="Select Place" />
+
+                    <ul className="location-list">
+                        {
+                            showLocation && locations.map((item) => (
+                                <li onClick={() => handleListItem(item)}>{item}</li>
+                            ))
+                        }
+                    </ul>
+                    <input type="text" className="select-search" 
+                    onChange={(event)=>loadRestaurants({restaurant:event.target.value})} 
+                    placeholder="Enter Food or Restaurant Name" />
+
+                </div>
+            </div>
+            <div className="restaurant-list-container">
+                {
+                    restaurants.map((item) => (
+                        <div className="restaurant-wrapper">
+                            <div className="heading-wrapper">
+                                <h3>{item.name}</h3>
+                                <h5>Contact:{item.contact}</h5>
+                            </div>
+                            <div className="address-wrapper">
+                                <div>Location: {item.area},Email: {item.email}</div>
+                                </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <RestaurantFooter />
+        </main>
+    );
 }
