@@ -1,6 +1,8 @@
 'use client'
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
+import RestaurantHeader from "../../../_components/RestaurantHeader";
+import RestaurantFooter from "../../../_components/RestaurantFooter";
 
 const EditFoodItems = (props) => {
 
@@ -51,6 +53,8 @@ const EditFoodItems = (props) => {
         
     }
     return (
+        <div>
+                    <RestaurantHeader/>
         <div className="container">
             <h1>Update Food Item</h1>
             <div className="input-wrapper">
@@ -87,6 +91,8 @@ const EditFoodItems = (props) => {
             <div className="input-wrapper">
                 <button className="button"  onClick={()=>router.push('../dashboard/')}>Done</button>
             </div>
+        </div>
+        <RestaurantFooter/>
         </div>
     )
 }

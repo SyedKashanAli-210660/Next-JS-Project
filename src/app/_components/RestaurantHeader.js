@@ -40,7 +40,7 @@ const RestaurantHeader = () => {
               <li><Link href="/">Profile</Link></li>
               <li><button onClick={logout}>Logout</button></li>
             </> :
-            <li><Link href="/">Login/SignUp</Link></li>
+            <li><Link href="/restaurant">Login/SignUp</Link></li>
         }
       </ul>
     </div>

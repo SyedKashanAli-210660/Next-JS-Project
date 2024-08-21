@@ -1,5 +1,7 @@
 "use client"
 import RestaurantHeader from "../../_components/RestaurantHeader";
+import RestaurantFooter from "../../_components/RestaurantFooter";
+
 import './../style.css'
 import AddFoodItems from "../../_components/AddFoodItem";
 import FoodItemList from "../../_components/FoodItemList";
@@ -14,6 +16,8 @@ const Dashboard=()=>{
         {
             addItem?<AddFoodItems setAddItem={setAddItem}/>:<FoodItemList/>
         }
+                    <RestaurantFooter/>
+
         
     </div>)
 }

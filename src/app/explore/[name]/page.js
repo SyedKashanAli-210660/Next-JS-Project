@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import CustomerHeader from "../../_components/CustomerHeader";
+import RestaurantFooter from "../../_components/RestaurantFooter";
 
 const Page = (props) => {
     const name=props.params.name;
@@ -49,6 +50,7 @@ const Page = (props) => {
                     ))
                 }
             </div>
+            <RestaurantFooter/>
         </div>
     )
 }

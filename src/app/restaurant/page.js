@@ -21,6 +21,7 @@ const Restaurant = () => {
                         !login ? "Already Have Account? Login" : "New User? Signup"
                     }
                 </button>
+                
             </div>
             </div>
             <RestaurantFooter/>
