@@ -102,7 +102,7 @@ body.dark {
     cursor: pointer;
     background-color: transparent;
     color: skyblue;
-    margin: 20px;
+    margin-bottom: 40px;
     font-weight: bold;
 }
 
@@ -156,7 +156,9 @@ table img {
     border: none;
     background-color: var(--input-bg-color, white);
     color: var(--input-text-color, black);
-    padding-left: 15px;
+    padding-left: 0px;
+    width: 48%;
+    box-sizing: border-box;
 }
 
 .main-page-banner .select-search {
@@ -214,6 +216,19 @@ table img {
 .restaurant-page-banner h1 {
     font-size: 65px;
 }
+.auth-container{
+    display: flex;
+}
+
+.login-wrapper,.signup-wrapper{
+    height: 350px;
+    border: 1px solid #ccc;
+    margin: 20px;
+    padding: 10px;
+    width: 50%;
+    text-align: center;
+}
+
 
 /* Dark mode specific styles */
 body.dark table, body.dark th, body.dark td {
@@ -254,3 +269,24 @@ body.dark .restaurant-wrapper {
     --restaurant-border-color: #555;
     --restaurant-text-color: #ffffff;
 }
+.home{
+    text-align: center;
+    
+}
+/* styles.module.css */
+.link {
+    color: #ccc; /* Default color */
+  }
+  
+  .link:hover {
+    color: #adc000; /* Hover color */
+  }
+  
+  .link.dark-mode {
+    color: #a0a0a0; /* Dark mode color */
+  }
+  
+  .link.dark-mode:hover {
+    color: #888888; /* Dark mode hover color */
+  }
+  

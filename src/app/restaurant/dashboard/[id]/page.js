@@ -89,7 +89,7 @@ const EditFoodItems = (props) => {
                 <button className="button" onClick={handleeditfooditem}>Update Food Item</button>
             </div>
             <div className="input-wrapper">
-                <button className="button"  onClick={()=>router.push('../dashboard/')}>Done</button>
+                <button className="button"  onClick={()=>router.push('../dashboard/')}>Back</button>
             </div>
         </div>
         <RestaurantFooter/>

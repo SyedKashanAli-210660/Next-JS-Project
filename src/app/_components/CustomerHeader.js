@@ -1,6 +1,9 @@
+'use client'
 import Link from "next/link";
-
 const CustomerHeader = () => {
+    //const userStorage = localStorage.getItem( 'user') && JSON. parse(localStorage.getItem( 'user'));
+//const cartStorage = localStorage.getItem('user') && JSON. parse( localStorage.getItem('cart'));
+
     return (
         <div className="header-wrapper">
             <div className="logo">
@@ -18,9 +21,6 @@ const CustomerHeader = () => {
                 </li>
                 <li>
                     <Link href="/">Cart(0)</Link>
-                </li>
-                <li>
-                    <Link href="/">Add Restaurant</Link>
                 </li>
             </ul>
           </div>

@@ -23,8 +23,8 @@ const Restaurant = () => {
                 </button>
                 
             </div>
-            </div>
             <RestaurantFooter/>
+            </div>
         </>
     );
 }

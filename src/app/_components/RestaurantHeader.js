@@ -31,16 +31,12 @@ const RestaurantHeader = () => {
         <img style={{ width: 100 }} src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/39-Food-Delivery-Logos-That-Will-Leave-You-Hungry-For-More/food-express-by-gigih-rudya-designcrowd.png" />
       </div>
       <ul>
-        <li>
-          <Link href="/">Home</Link>
-        </li>
         {
           details && details.name ?
             <>
-              <li><Link href="/">Profile</Link></li>
               <li><button onClick={logout}>Logout</button></li>
             </> :
-            <li><Link href="/restaurant">Login/SignUp</Link></li>
+            <li><Link href="/">Home</Link></li>
         }
       </ul>
     </div>
