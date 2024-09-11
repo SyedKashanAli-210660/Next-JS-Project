@@ -70,7 +70,7 @@ export default function Home() {
                     </ul>
                     <input type="text" 
                         onChange={(event) => loadRestaurants({ restaurant: event.target.value })}
-                        className="select-search" placeholder="Enter Food or Restaurant Name" />
+                        className="select-search" placeholder="Enter Restaurant Name" />
 
                 </div>
             </div>

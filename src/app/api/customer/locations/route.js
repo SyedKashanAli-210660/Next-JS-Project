@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import {NextResponse} from "next/server";
 import { connectionStr } from "../../../lib/db";
-import restaurantSchema from "../../../lib/restaurantsModel";
+import { restaurantSchema } from "../../../lib/restaurantsModel";
 
 export async function GET(){
     await mongoose.connect(connectionStr)

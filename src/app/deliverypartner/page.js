@@ -1,122 +1,34 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import RestaurantFooter from '../_components/RestaurantFooter';
 import DeliveryHeader from '../_components/DeliveryHeader';
 import { useRouter } from 'next/navigation';
+import DeliveryLogin from '../_components/DeliveryLogin';
+import DeliverySignUp from '../_components/DeliverySignUp';
 
 const page = () => {
-  const [loginMobile,setLoginMobile]=useState();
-  const [loginPassword,setLoginPassword]=useState();
-  
-  const [password, setPassword] = useState('');
-  const [c_password, setC_password] = useState('');
-  const [name, setName] = useState('');
-  const [area, setArea] = useState('');
-  const [contact, setContact] = useState('');
-  const router=useRouter();
+  const [login, setlogin] = useState(true);
 
-  useEffect(()=>{
-    const delivery=JSON.parse(localStorage.getItem('delivery'));
-    if(delivery){
-      router.push('deliverydashboard')
-    }
-  },[])
-  const handleSignup = async () => {
-    console.log(contact, password, c_password, name, area);
-    let response = await fetch("http://localhost:3000/api/deliverypartners/signup", {
-      method: "POST",
-      body: JSON.stringify({ contact, password, name, area })
-    })
-    response = await response.json();
-    if (response.success) {
-      const { result } = response;
-      delete result.password;
-      localStorage.setItem("delivery",JSON.stringify(result));
-      alert("Success");
-      router.push('/deliverydashboard')
-    }else{
-      alert("Failed to Signup")
-    }}
-
-    const handleLogin=async ()=>{
-      let response = await fetch("http://localhost:3000/api/deliverypartners/login", {
-        method: "POST",
-        body: JSON.stringify({ contact:loginMobile, password:loginPassword})
-      });
-      response = await response.json();
-      if (response.success) {
-        const{result}=response;
-        delete result.password;
-        localStorage.setItem("delivery", JSON.stringify(result));
-        alert("success");    
-        router.push('/deliverydashboard')
-      }else{
-        alert("Login Failed.Please try again with valid Mobile No. and Password")
-      }
-    }
-  
   return (
-    <div>
-      <DeliveryHeader/>
-     
-    <div>
-      
-        <h1>Delivery Partner</h1>
-        <div className='auth-container'>
-            <div className='login-wrapper'>
-            <h2>Login</h2>
-      <div>
-        <div className="input-wrapper">
-          <input type="text" placeholder="Enter Phone Number" className="input-feild" 
-          value={loginMobile} onChange={(e)=>setLoginMobile(e.target.value)}/>
-        
-        </div>
-        <div className="input-wrapper">
-          <input type="password" placeholder="Enter Password" className="input-feild"
-          value={loginPassword} onChange={(e)=>setLoginPassword(e.target.value)}/>
-        </div>
-        <div className="input-wrapper">
-          <button  onClick={handleLogin} className="button">Login</button>
-        </div>
-      </div>
+    <>
+      <div className="container">
+        <DeliveryHeader />
 
-            </div>
-            <div className='signup-wrapper'>
-            <h2>Signup</h2>
-      <div>
+        <h1 style={{ textAlign: "center" }}>Delivery Login/Signup Page</h1>{
+                login ? <DeliveryLogin/> : <DeliverySignUp />
 
-      <div className="input-wrapper">
-          <input type="text" placeholder="Enter Conatct No." className="input-feild"
-            value={contact} onChange={(event) => setContact(event.target.value)} />
+            }
+        <div >
+          <button className="button-link" onClick={() => setlogin(!login)}>
+            {
+              !login ? "Already Have Account? Login" : "New User? Signup"
+            }
+          </button>
+
         </div>
-        <div className="input-wrapper">
-          <input type="password" placeholder="Enter Password" className="input-feild"
-            value={password} onChange={(event) => setPassword(event.target.value)} />
-        </div>
-        <div className="input-wrapper">
-          <input type="password" placeholder="Confirm Password" className="input-feild"
-            value={c_password} onChange={(event) => setC_password(event.target.value)} />
-         
-        </div>
-        <div className="input-wrapper">
-          <input type="text" placeholder="Enter Restaurant Name" className="input-feild"
-            value={name} onChange={(event) => setName(event.target.value)} />
-        
-        </div>
-        <div className="input-wrapper">
-          <input type="text" placeholder="Enter Area" className="input-feild"
-            value={area} onChange={(event) => setArea(event.target.value)} />
-        
-        </div>
-        <div className="input-wrapper">
-          <button onClick={handleSignup} className="button" >Sign Up</button>
-        </div>
+        <RestaurantFooter />
       </div>
-            </div>
-        </div>
-    </div>
-    <RestaurantFooter/>
-    </div>
+    </>
   )
 }
 

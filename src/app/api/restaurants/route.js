@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import { connectionStr } from "../../lib/db";
-import restaurantSchema from "../../lib/restaurantsModel";
 import { NextResponse } from "next/server";
+import { restaurantSchema } from "../../lib/restaurantsModel";
+
 
 console.log("MongoDB Connection String:", connectionStr);
 
@@ -22,6 +23,7 @@ export async function GET() {
         await mongoose.connection.close(); // Ensure connection is closed
         console.log("MongoDB connection closed");
     }
+    
 }
 
 export async function POST(request) {

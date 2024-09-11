@@ -3,19 +3,19 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const DeliveryHeader = (props) => {
+const AdminHeader = (props) => {
   
       const [details, setDetails] = useState();
       const router = useRouter();
       const pathName = usePathname();
     
       useEffect(() => {
-        let data = localStorage.getItem("delivery")
-        if (!data && pathName == "/deliverydashboard"){
-          router.push("/deliverypartner")
+        let data = localStorage.getItem("admin")
+        if (!data && pathName == "/adminDashboard"){
+          router.push("/admin")
         } else if
-          (data && pathName == "/deliverypartner") {
-            router.push("/deliverydashboard");
+          (data && pathName == "/admin") {
+            router.push("/adminDashboard");
         }
         else {
           setDetails(JSON.parse(data))
@@ -24,8 +24,8 @@ const DeliveryHeader = (props) => {
       )
 
   const logout=()=>{
-    localStorage.removeItem("delivery")
-    router.push("/deliverypartner")
+    localStorage.removeItem("admin")
+    router.push("/admin")
   }
     return (
         <div className="header-wrapper">
@@ -46,4 +46,4 @@ const DeliveryHeader = (props) => {
           </div>
     )
 }
-export default DeliveryHeader;
+export default AdminHeader;
