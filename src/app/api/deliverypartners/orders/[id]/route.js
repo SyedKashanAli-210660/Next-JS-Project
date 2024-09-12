@@ -7,10 +7,8 @@ import { restaurantSchema } from "../../../../lib/restaurantsModel";
 export async function GET(request, content) {
 
     const id = content.params.id
+    let success = false;
         await mongoose.connect(connectionStr);
-
-
-        let success = false;
         let result = await orderSchema.find({ deliveryBoy_id:id });
 
 

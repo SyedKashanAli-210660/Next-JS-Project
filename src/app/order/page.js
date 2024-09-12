@@ -9,8 +9,8 @@ const Page = () => {
     const router = useRouter();
 
     // Fetch user and cart data from localStorage
-    const userStorage = typeof window !== 'undefined' && localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')) || [];
-    const cartStorage = typeof window !== 'undefined' && localStorage.getItem('cart') && JSON.parse(localStorage.getItem('cart')) || [];
+    const userStorage = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')) || [];
+    const cartStorage = localStorage.getItem('cart') && JSON.parse(localStorage.getItem('cart')) || [];
 
     // Calculate total price of cart items
     const [total] = useState(() => {
@@ -27,20 +27,20 @@ const Page = () => {
 
 // Update ordernow function
 const ordernow = async () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const cart = JSON.parse(localStorage.getItem('cart'));
 
-    const area = user.area;
-    const user_id = user._id;
+    let user_id=JSON.parse(localStorage.getItem('user'))._id;
+    let area =JSON.parse(localStorage.getItem('user')).area;
+    let cart = JSON.parse(localStorage.getItem('cart'));
+
     const foodItemsIds = cart.map(item => item._id).toString();
 
     // Fetch delivery partner by area
-    let deliveryBoyResponse = await fetch(`http://localhost:3000/api/deliverypartners/${area}`);
+    let deliveryBoyResponse = await fetch('http://localhost:3000/api/deliverypartners/'+area);
     deliveryBoyResponse = await deliveryBoyResponse.json();
     
     let deliveryBoyIds = deliveryBoyResponse.result.map(item => item._id);
     let deliveryBoy_id = deliveryBoyIds[Math.floor(Math.random() * deliveryBoyIds.length)];
-
+    console.log(deliveryBoyResponse);
     // Handle if no delivery partner is available
     if (!deliveryBoy_id) {
         alert("No Delivery Partner available in your area currently");
@@ -59,9 +59,7 @@ const ordernow = async () => {
         // Post order to the server
         let response = await fetch('http://localhost:3000/api/order', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            
             body: JSON.stringify(collection),
         });
 
@@ -69,12 +67,8 @@ const ordernow = async () => {
         
         if (response.success) {
             alert("Order confirmed");
-
-            // Clear cart and trigger state update
             localStorage.removeItem('cart');
-            setRemoveCartData(true); // Trigger header update
-
-            // Redirect to profile page after successful order
+            setRemoveCartData(true); 
             router.push('/profile');
         } else {
             alert("Order failed");

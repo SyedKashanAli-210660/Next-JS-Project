@@ -10,7 +10,7 @@ const page = () => {
   },[])
   const getMyOrders=async()=>{
     const userStorage= JSON.parse((localStorage).getItem('user'));
-    let response = await fetch('http://localhost:3000/api/order?id=${userStorage._id}');
+    let response = await fetch('http://localhost:3000/api/order/'+userStorage._id);
     response = await response.json();
     if(response.success){
       setMyOrders(response.result)
@@ -28,7 +28,7 @@ const page = () => {
       style={{marginLeft:'auto', marginRight:'auto'}}>
         <h4>Name: {item.data.name}</h4>
         <div>Amount: {item.amount}</div>
-        <div>Address: {item.area}</div>
+        <div>Address: {item.data.area}</div>
         <div>Status: {item.status}</div>
         </div>
     ))
